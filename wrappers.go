@@ -17,18 +17,18 @@ const tolerance = 1e-5
 func GoNumMatrixToCLPPackedMatrix(matrix mat.Matrix) *clp.PackedMatrix {
 	nRows, nCols := matrix.Dims()
 	packedMat := clp.NewPackedMatrix()
-    packedMat.Reserve(nCols, nRows * nCols, false)
-        
-    for c:=0;c<nCols;c++ {
-        col := make([]clp.Nonzero, 0)
-        for r:=0;r<nRows;r++ {
-            thisVal := matrix.At(r,c)
-            if !floats.EqualWithinAbs(thisVal, 0.0, tolerance) {
-                col = append(col, clp.Nonzero{Index: r, Value: thisVal,})
-            }
-        }
-        packedMat.AppendColumn(col)
-    }
+	packedMat.Reserve(nCols, nRows * nCols, false)
+	
+	for c:=0;c<nCols;c++ {
+		col := make([]clp.Nonzero, 0)
+		for r:=0;r<nRows;r++ {
+			thisVal := matrix.At(r,c)
+			if !floats.EqualWithinAbs(thisVal, 0.0, tolerance) {
+				col = append(col, clp.Nonzero{Index: r, Value: thisVal,})
+			}
+		}
+		packedMat.AppendColumn(col)
+	}
 	return packedMat
 }
 
@@ -37,18 +37,24 @@ func CSCToCLPPackedMatrix(matrix *sparse.CSC) *clp.PackedMatrix {
 	_, nCols := matrix.Dims()
 	totalNNZ := matrix.NNZ()
 	packedMat := clp.NewPackedMatrix()
-    packedMat.Reserve(nCols, totalNNZ, false)
+	packedMat.Reserve(nCols, totalNNZ, false)
 	
-    for c:=0;c<nCols;c++ {
+	for c:=0;c<nCols;c++ {
 		col := make([]clp.Nonzero, 0)
 		matrix.DoColNonZero(c,func(i, j int, v float64) {
-              ele := clp.Nonzero{Index: i, Value: v, }
+			ele := clp.Nonzero{Index: i, Value: v, }
 			col = append(col, ele)
 		})
-        packedMat.AppendColumn(col)
-    }
-    
+		packedMat.AppendColumn(col)
+	}
+	
 	return packedMat
+}
+
+// COOToCLPPackedMatrix converts a sparse.COO into a CoinPackedMatrix
+func COOToCLPPackedMatrix(matrix *sparse.COO) *clp.PackedMatrix {
+	csc := matrix.ToCSC()
+	return CSCToCLPPackedMatrix(csc)
 }
 
 // eof
