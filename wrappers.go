@@ -5,9 +5,9 @@ package clpwrapper
 
 import (
 	"github.com/james-bowman/sparse"
-	"gonum.org/v1/gonum/mat"
-	"gonum.org/v1/gonum/floats"
 	"github.com/lanl/clp"
+	"gonum.org/v1/gonum/floats"
+	"gonum.org/v1/gonum/mat"
 )
 
 // equality tolerance
@@ -17,14 +17,14 @@ const tolerance = 1e-5
 func GoNumMatrixToCLPPackedMatrix(matrix mat.Matrix) *clp.PackedMatrix {
 	nRows, nCols := matrix.Dims()
 	packedMat := clp.NewPackedMatrix()
-	packedMat.Reserve(nCols, nRows * nCols, false)
-	
-	for c:=0;c<nCols;c++ {
+	packedMat.Reserve(nCols, nRows*nCols, false)
+
+	for c := 0; c < nCols; c++ {
 		col := make([]clp.Nonzero, 0)
-		for r:=0;r<nRows;r++ {
-			thisVal := matrix.At(r,c)
+		for r := 0; r < nRows; r++ {
+			thisVal := matrix.At(r, c)
 			if !floats.EqualWithinAbs(thisVal, 0.0, tolerance) {
-				col = append(col, clp.Nonzero{Index: r, Value: thisVal,})
+				col = append(col, clp.Nonzero{Index: r, Value: thisVal})
 			}
 		}
 		packedMat.AppendColumn(col)
@@ -38,16 +38,16 @@ func CSCToCLPPackedMatrix(matrix *sparse.CSC) *clp.PackedMatrix {
 	totalNNZ := matrix.NNZ()
 	packedMat := clp.NewPackedMatrix()
 	packedMat.Reserve(nCols, totalNNZ, false)
-	
-	for c:=0;c<nCols;c++ {
+
+	for c := 0; c < nCols; c++ {
 		col := make([]clp.Nonzero, 0)
-		matrix.DoColNonZero(c,func(i, j int, v float64) {
-			ele := clp.Nonzero{Index: i, Value: v, }
+		matrix.DoColNonZero(c, func(i, j int, v float64) {
+			ele := clp.Nonzero{Index: i, Value: v}
 			col = append(col, ele)
 		})
 		packedMat.AppendColumn(col)
 	}
-	
+
 	return packedMat
 }
 
