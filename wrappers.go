@@ -10,11 +10,14 @@ import (
 	"gonum.org/v1/gonum/mat"
 )
 
-// equality tolerance
-const tolerance = 1e-5
-
 // GoNumMatrixToCLPPackedMatrix converts a likely-sparse mat.Matrix into a CoinPackedMatrix
 func GoNumMatrixToCLPPackedMatrix(matrix mat.Matrix) *clp.PackedMatrix {
+	return GoNumMatrixToCLPPackedMatrixAtTolerance(matrix, 0.0)
+}
+
+// GoNumMatrixToCLPPackedMatrixAtTolerance converts a likely-sparse mat.Matrix into a CoinPackedMatrix
+// entries with absolute value less than tolerance are dropped
+func GoNumMatrixToCLPPackedMatrixAtTolerance(matrix mat.Matrix, tolerance float64) *clp.PackedMatrix {
 	nRows, nCols := matrix.Dims()
 	packedMat := clp.NewPackedMatrix()
 	packedMat.Reserve(nCols, nRows*nCols, false)
