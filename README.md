@@ -4,7 +4,7 @@ clpwrapper
 This is a small package that provides interoperability
 among:
 * [clp](https://github.com/lanl/clp) for solving linear programs
-* [Gonum mat](https://github.com/gonum/gonum/mat) for
+* [Gonum mat](https://github.com/gonum/gonum/) for
 general matrices
 * [sparse](https://github.com/james-bowman/sparse) for sparse matrices
 
