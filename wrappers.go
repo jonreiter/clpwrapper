@@ -60,4 +60,35 @@ func COOToCLPPackedMatrix(matrix *sparse.COO) *clp.PackedMatrix {
 	return CSCToCLPPackedMatrix(csc)
 }
 
+// LoadSparseProblem loads from sparse constraint matrices
+func LoadSparseProblem(simp *clp.Simplex, C []float64,
+	varBounds, eqBounds, ubBounds []clp.Bounds,
+	AEQ, AUB *sparse.COO) {
+
+	nRowsEQ, nColsEQ := AEQ.Dims()
+	nRowsUB, _ := AUB.Dims()
+
+	AEQcsc := AEQ.ToCSC()
+	AUBcsc := AUB.ToCSC()
+
+	// merge together the A_eq and A_ub matrices
+	mergedCOO := sparse.NewCOO(nRowsEQ+nRowsUB, nColsEQ, nil, nil, nil)
+	for c := 0; c < len(C); c++ {
+		AEQcsc.DoColNonZero(c, func(i, j int, v float64) {
+			mergedCOO.Set(i, j, v)
+		})
+		AUBcsc.DoColNonZero(c, func(i, j int, v float64) {
+			mergedCOO.Set(i+nRowsEQ, j, v)
+		})
+	}
+	mergedCSC := mergedCOO.ToCSC()
+
+	// merge the bounds
+	fullBounds := append(eqBounds, ubBounds...)
+
+	// Load the problem into the model.
+	cpm := CSCToCLPPackedMatrix(mergedCSC)
+	simp.LoadProblem(cpm, varBounds, C, fullBounds, nil)
+}
+
 // eof
