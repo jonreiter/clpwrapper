@@ -62,7 +62,7 @@ func COOToCLPPackedMatrix(matrix *sparse.COO) *clp.PackedMatrix {
 
 // LoadSparseProblem loads from sparse constraint matrices
 func LoadSparseProblem(simp *clp.Simplex, C []float64,
-	varBounds, eqBounds, ubBounds []clp.Bounds,
+	varBounds, ubBounds []clp.Bounds, eqBoundsVec []float64,
 	AEQ, AUB *sparse.COO) {
 
 	nRowsEQ, nColsEQ := AEQ.Dims()
@@ -84,6 +84,7 @@ func LoadSparseProblem(simp *clp.Simplex, C []float64,
 	mergedCSC := mergedCOO.ToCSC()
 
 	// merge the bounds
+	eqBounds := BuildEqualityBounds(eqBoundsVec)
 	fullBounds := append(eqBounds, ubBounds...)
 
 	// Load the problem into the model.
