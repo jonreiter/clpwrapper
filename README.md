@@ -1,8 +1,10 @@
-clpwrapper
-==========
+# clpwrapper
+
+[![GoDoc](https://godoc.org/github.com/jonreiter/clpwrapper?status.svg)](https://godoc.org/github.com/jonreiter/clpwrapper)  [![Go Report](https://goreportcard.com/badge/github.com/jonreiter/clpwrapper)](https://goreportcard.com/badge/github.com/jonreiter/clpwrapper)
 
 This is a small package that provides interoperability
 among:
+
 * [clp](https://github.com/lanl/clp) for solving linear programs
 * [Gonum mat](https://github.com/gonum/gonum/) for
 general matrices
@@ -21,8 +23,3 @@ Then run:
 ```bash
 go get github.com/jonreiter/clpwrapper
 ```
-
-## Documentation
-
-Docs are in the [usual place](https://godoc.org/github.com/jonreiter/clpwrapper) thanks to the fantastic work of the
-[GoDoc](https://godoc.org/) project.
