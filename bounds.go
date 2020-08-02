@@ -9,7 +9,7 @@ import (
 )
 
 // ConvertBounds from a gonum mat into clp bounds
-func ConvertBounds(varBounds *mat.Dense) ([]clp.Bounds, error) {
+func ConvertBounds(varBounds mat.Matrix) ([]clp.Bounds, error) {
 	rows, cols := varBounds.Dims()
 	if cols != 2 {
 		return nil, errors.New("Bounds matrix must have 2 columns")
