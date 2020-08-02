@@ -12,7 +12,7 @@ import (
 func ConvertBounds(varBounds mat.Matrix) ([]clp.Bounds, error) {
 	rows, cols := varBounds.Dims()
 	if cols != 2 {
-		return nil, errors.New("Bounds matrix must have 2 columns")
+		return nil, errors.New("bounds matrix must have 2 columns")
 	}
 	cb := make([]clp.Bounds, rows)
 	for i := 0; i < rows; i++ {
