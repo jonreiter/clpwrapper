@@ -54,7 +54,7 @@ func BuildBelowBounds(boundsVec []float64) []clp.Bounds {
 	return varBounds
 }
 
-// BuildAboveBounds returns a vector of math.Inf(-1)->v bounds
+// BuildAboveBounds returns a vector of v->math.Inf(1) bounds
 func BuildAboveBounds(boundsVec []float64) []clp.Bounds {
 	varBounds := make([]clp.Bounds, len(boundsVec))
 	for i, v := range boundsVec {
