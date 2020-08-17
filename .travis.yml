@@ -11,4 +11,4 @@ after_success:
         - bash <(curl -s https://codecov.io/bash)
 
 before_install:
-        - sudo apt-get -y install coinor-clp
+        - sudo apt-get -y install coinor-clp coinor-libclp-dev ocl-icd-opencl-dev
