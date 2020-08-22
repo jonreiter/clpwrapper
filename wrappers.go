@@ -32,16 +32,16 @@ func GoNumMatrixToCLPPackedMatrixAtTolerance(matrix mat.Matrix, tolerance float6
 		}
 		packedMat.AppendColumn(col)
 	}
+	packedMat.SetDimensions(nRows, nCols)
 	return packedMat
 }
 
 // CSCToCLPPackedMatrix converts a sparse.CSC into a CoinPackedMatrix
 func CSCToCLPPackedMatrix(matrix *sparse.CSC) *clp.PackedMatrix {
-	_, nCols := matrix.Dims()
+	nRows, nCols := matrix.Dims()
 	totalNNZ := matrix.NNZ()
 	packedMat := clp.NewPackedMatrix()
 	packedMat.Reserve(nCols, totalNNZ, false)
-
 	for c := 0; c < nCols; c++ {
 		col := make([]clp.Nonzero, 0)
 		matrix.DoColNonZero(c, func(i, j int, v float64) {
@@ -51,6 +51,7 @@ func CSCToCLPPackedMatrix(matrix *sparse.CSC) *clp.PackedMatrix {
 		packedMat.AppendColumn(col)
 	}
 
+	packedMat.SetDimensions(nRows, nCols)
 	return packedMat
 }
 

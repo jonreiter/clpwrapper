@@ -72,3 +72,26 @@ func TestLoadSparseProblem(t *testing.T) {
 	}
 
 }
+
+// TestZeros passes in a constraint matrix that is almost-entirely 0s.
+// This requires explicitly setting the size of the PackedMatrix.
+func TestZeros(t *testing.T) {
+	C := []float64{1}
+
+	ubBounds := []clp.Bounds{
+		clp.Bounds{Lower: 0, Upper: 0},
+		clp.Bounds{Lower: 0, Upper: 0},
+		clp.Bounds{Lower: 0, Upper: 0},
+		clp.Bounds{Lower: 0, Upper: 0},
+	}
+
+	simp := clp.NewSimplex()
+
+	packedMat := clp.NewPackedMatrix()
+	packedMat.Reserve(1, 1, false)
+	packedMat.AppendColumn([]clp.Nonzero{clp.Nonzero{Index: 0, Value: 1}})
+	packedMat.SetDimensions(4, 1)
+
+	simp.LoadProblem(packedMat, nil, C, ubBounds, nil)
+
+}
