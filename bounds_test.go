@@ -30,7 +30,7 @@ func TestConvertBounds(t *testing.T) {
 	}
 
 	b2 := mat.NewDense(r, 3, nil)
-	clpbs, err = clpwrapper.ConvertBounds(b2)
+	_, err = clpwrapper.ConvertBounds(b2)
 	if err == nil {
 		t.Error("didnt get expected error")
 	}
