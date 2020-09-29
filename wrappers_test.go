@@ -19,15 +19,15 @@ func TestLoadSparseProblem(t *testing.T) {
 	aeq.Set(0, 0, 1)
 
 	varBounds := []clp.Bounds{
-		clp.Bounds{Lower: 1, Upper: 6},
-		clp.Bounds{Lower: 1, Upper: 6},
-		clp.Bounds{Lower: 1, Upper: 6},
+		{Lower: 1, Upper: 6},
+		{Lower: 1, Upper: 6},
+		{Lower: 1, Upper: 6},
 	}
 
 	ubBounds := []clp.Bounds{
-		clp.Bounds{Lower: math.Inf(-1), Upper: -1},
-		clp.Bounds{Lower: math.Inf(-1), Upper: -1},
-		clp.Bounds{Lower: math.Inf(-1), Upper: -1},
+		{Lower: math.Inf(-1), Upper: -1},
+		{Lower: math.Inf(-1), Upper: -1},
+		{Lower: math.Inf(-1), Upper: -1},
 	}
 
 	aub := sparse.NewCOO(3, 3, nil, nil, nil)
@@ -79,17 +79,17 @@ func TestZeros(t *testing.T) {
 	C := []float64{1}
 
 	ubBounds := []clp.Bounds{
-		clp.Bounds{Lower: 0, Upper: 0},
-		clp.Bounds{Lower: 0, Upper: 0},
-		clp.Bounds{Lower: 0, Upper: 0},
-		clp.Bounds{Lower: 0, Upper: 0},
+		{Lower: 0, Upper: 0},
+		{Lower: 0, Upper: 0},
+		{Lower: 0, Upper: 0},
+		{Lower: 0, Upper: 0},
 	}
 
 	simp := clp.NewSimplex()
 
 	packedMat := clp.NewPackedMatrix()
 	packedMat.Reserve(1, 1, false)
-	packedMat.AppendColumn([]clp.Nonzero{clp.Nonzero{Index: 0, Value: 1}})
+	packedMat.AppendColumn([]clp.Nonzero{{Index: 0, Value: 1}})
 	packedMat.SetDimensions(4, 1)
 
 	simp.LoadProblem(packedMat, nil, C, ubBounds, nil)
