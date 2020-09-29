@@ -1,8 +1,8 @@
 # clpwrapper
 
 [![GoDoc](https://godoc.org/github.com/jonreiter/clpwrapper?status.svg)](https://godoc.org/github.com/jonreiter/clpwrapper)
-[![Go Report](https://goreportcard.com/badge/github.com/jonreiter/clpwrapper)](https://goreportcard.com/badge/github.com/jonreiter/clpwrapper)
-[![BuildStatus](https://www.travis-ci.org/jonreiter/clpwrapper.svg?branch=master)](https://www.travis-ci.org/github/jonreiter/clpwrapper/branches)
+[![Go Report](https://goreportcard.com/badge/github.com/jonreiter/clpwrapper)](https://goreportcard.com/report/github.com/jonreiter/clpwrapper)
+[![BuildStatus](https://www.travis-ci.com/jonreiter/clpwrapper.svg?branch=master)](https://www.travis-ci.com/github/jonreiter/clpwrapper/branches)
 [![codecov](https://codecov.io/gh/jonreiter/clpwrapper/branch/master/graph/badge.svg)](https://codecov.io/gh/jonreiter/clpwrapper)
 
 
