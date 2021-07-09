@@ -6,7 +6,7 @@ package clpwrapper
 import (
 	"github.com/james-bowman/sparse"
 	"github.com/lanl/clp"
-	"gonum.org/v1/gonum/floats"
+	"gonum.org/v1/gonum/floats/scalar"
 	"gonum.org/v1/gonum/mat"
 )
 
@@ -26,7 +26,7 @@ func GoNumMatrixToCLPPackedMatrixAtTolerance(matrix mat.Matrix, tolerance float6
 		col := make([]clp.Nonzero, 0)
 		for r := 0; r < nRows; r++ {
 			thisVal := matrix.At(r, c)
-			if !floats.EqualWithinAbs(thisVal, 0.0, tolerance) {
+			if !scalar.EqualWithinAbs(thisVal, 0.0, tolerance) {
 				col = append(col, clp.Nonzero{Index: r, Value: thisVal})
 			}
 		}
